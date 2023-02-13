@@ -1,2 +1,6 @@
 # RailLoadViewApp
-Display info of RailLoadModel
+このプロジェクトは、鉄道模型の運行状況を表示するアプリを作成することです。
+## 仕様
+COMポートから受信した運行情報をブラウザで表示します。
+### フォーマット
+未定
