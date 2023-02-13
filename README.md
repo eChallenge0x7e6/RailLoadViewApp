@@ -11,7 +11,7 @@ COMポートの指定はアプリ内で行います。
 	先頭文字：^
 	区間Xの列車台数n：Rx=n
 	区間Xのポイント切替：Px=true/false
-　センサxの状態：Sx=on/off
+	センサxの状態：Sx=on/off
 	終末文字：$
 
 	例）^R0=0,R1=1,R2=0,R3=1,P0=false,S0=off,S1=off,S2=off,S3=off,S4=off,S5=off,S6=off,S7=off$
