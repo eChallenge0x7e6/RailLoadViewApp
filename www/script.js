@@ -32,15 +32,15 @@ async function onConnectButtonClick()
 
 function addSerial(msg)
 {
-	var textarea = document.getElementById('outputArea');
+	var textarea = document.getElementById('receivedTxt');
 	textarea.value += msg;
 	textarea.scrollTop = textarea.scrollHeight;
 }
 
 async function sendSerial()
 {
-	var text = document.getElementById('sendInput').value;
-	document.getElementById('sendInput').value = "";
+	var text = document.getElementById('sendTxt').value;
+	document.getElementById('sendTxt').value = "";
 
 	const encoder = new TextEncoder();
 	const writer = port.writable.getWriter();

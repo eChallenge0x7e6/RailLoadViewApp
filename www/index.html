@@ -12,10 +12,12 @@
 				</header>
         <main>
 					<div id="inputArea">
-						<button id="btnSend" disabled onclick="sendSerial();">送信</button>
-						<input id="sendInput" type="text"/>
+						<button id="btnSend" disabled onclick="sendSerial();">送信</button><br/>
+						<textarea id="sendTxt"></textarea>
 					</div>
-					<div id="outputArea"></div>
+                    <div id="outputArea">
+                        <textarea id="receivedTxt"></textarea>
+                    </div>
 				</main>
         <footer></footer>
     </body>
