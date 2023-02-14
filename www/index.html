@@ -7,8 +7,16 @@
     </head>
     <body>
         <aside></aside>
-        <header></header>
-        <main></main>
+        <header>
+					<button onclick="onConnectButtonClick();">接続</button>
+				</header>
+        <main>
+					<div id="inputArea">
+						<button id="btnSend" disabled onclick="sendSerial();">送信</button>
+						<input id="sendInput" type="text"/>
+					</div>
+					<div id="outputArea"></div>
+				</main>
         <footer></footer>
     </body>
 </html>

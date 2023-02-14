@@ -5,8 +5,9 @@ async function onConnectButtonClick()
 		await port.open({ baudRate: 115200 });
 
 		while (port.readable) {
+			addSerial("Opened\n");
+			document.getElementById('btnSend').disabled = null;
 			const reader = port.readable.getReader();
-
 			try {
 				while (true) {
 					const { value, done } = await reader.read();
@@ -21,6 +22,7 @@ async function onConnectButtonClick()
 				addSerial("Error: Read" + error + "\n");
 			} finally {
 				reader.releaseLock();
+				document.getElementById('btnSend').disabled = "disabled";
 			}
 		}
 	} catch (error) {
