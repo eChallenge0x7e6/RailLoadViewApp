@@ -1,24 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <title>列車運行情報ボード</title>
-        <link href="style.css" rel="stylesheet">
-        <script src="script.js"></script>
-    </head>
-    <body>
-        <aside></aside>
-        <header>
-					<button onclick="onConnectButtonClick();">接続</button>
-				</header>
-        <main>
-					<div id="inputArea">
-						<button id="btnSend" disabled onclick="sendSerial();">送信</button><br/>
-						<textarea id="sendTxt"></textarea>
-					</div>
-                    <div id="outputArea">
-                        <textarea id="receivedTxt"></textarea>
-                    </div>
-				</main>
-        <footer></footer>
-    </body>
+  <head>
+    <title>列車運行情報ボード</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <aside></aside>
+    <header>
+      <p>
+        <button onclick="onConnectButtonClick();">接続</button>
+        <input id="sendTxt" type="text">
+        <button id="btnSend" disabled onclick="sendSerial();">送信</button>
+      </p>
+    </header>
+    <main>
+      <div id="partsArea">
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/strait_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/branch_L_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/branch_R_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/branch_RL_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/branch_X_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/X_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/end_rail.png">
+        </div>
+        <div class="parts">
+          <img class="panel" src="./img/panel.png">
+          <img class="panel layer" src="./img/curve_rail.png">
+        </div>
+      </div>
+      <div id="fieldArea">
+          
+      </div>
+      <div id="paramArea">
+      </div>
+    </main>
+    <footer>
+      <textarea id="receivedTxt"></textarea>
+    </footer>
+  </body>
 </html>
