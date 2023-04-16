@@ -1,3 +1,23 @@
+let port;
+let elImg = new Image();
+elImg.src = "./img/panel.png";
+
+function getRailInfo(){
+	sendSerial("@I");
+}
+function getSensInfo(){
+	sendSerial("@S");
+}
+function setReset(){
+	sendSerial("@R");
+}
+function setParam(){
+	var data = "@P";
+	data += 0x40;	//address
+	data += [0x00, 0x00, 0x00, 0x00, 0x00, 0x00];	//parameter 
+	sendSerial(data);
+}
+
 async function onConnectButtonClick()
 {
 	try {
@@ -5,83 +25,79 @@ async function onConnectButtonClick()
 		await port.open({ baudRate: 115200 });
 
 		while (port.readable) {
-			addSerial("Opened\n");
-			document.getElementById('btnSend').disabled = null;
+			readSerial("Opened\n");
+			document.getElementsByClassName('btnFunc').disabled = null;
 			const reader = port.readable.getReader();
 			try {
 				while (true) {
 					const { value, done } = await reader.read();
 					if (done) {
-						addSerial("Canceled\n");
+						readSerial("Canceled\n");
 						break;
-						}
-					const inputValue = new TextDecoder().decode(value);
-					addSerial(inputValue);
+					} else {
+						const inputValue = new TextDecoder().decode(value);
+						readSerial(inputValue);
 					}
+				}
 			} catch (error) {
-				addSerial("Error: Read" + error + "\n");
+				readSerial("Error: Read" + error + "\n");
 			} finally {
 				reader.releaseLock();
-				document.getElementById('btnSend').disabled = "disabled";
+				document.getElementsByClassName('btnFunc').disabled = "disabled";
 			}
 		}
 	} catch (error) {
-		addSerial("Error: Open" + error + "\n");
+		readSerial("Error: Open" + error + "\n");
 	}
 }
-
-function addSerial(msg)
+function readSerial(msg)
 {
 	var textarea = document.getElementById('receivedTxt');
 	textarea.value += msg;
 	textarea.scrollTop = textarea.scrollHeight;
 }
-
-async function sendSerial()
+async function onSendButtonClick()
 {
 	var text = document.getElementById('sendTxt').value;
 	document.getElementById('sendTxt').value = "";
-
+	sendSerial(text);
+}
+async function sendSerial(data)
+{
 	const encoder = new TextEncoder();
 	const writer = port.writable.getWriter();
-	await writer.write(encoder.encode(text + "\n"));
+	await writer.write(encoder.encode(data));
 	writer.releaseLock();
 }
-
-let elImg = new Image();
-elImg.src = "./img/panel.png";
-
 function dragstart_handler(ev) {
 	// 対象となる要素の id を DataTransfer オブジェクトに追加する
 	ev.dataTransfer.effectAllowed = "move";
 	ev.dataTransfer.setData("application/my-app", ev.target);
-	console.log(ev.target);
+	console.log(ev);
 	ev.dataTransfer.setDragImage(elImg,0,0);
 	console.log("Drag!!!!!!!!!!!!");
 }
 function dragover_handler(ev) {
 	ev.preventDefault();
-	//ev.dataTransfer.dropEffect = "move";
+	ev.dataTransfer.dropEffect = "move";
 }
 function drop_handler(ev) {
 	ev.preventDefault();
 	// 移動された要素の id を取得して、その要素を target の DOM に追加する
 	const data = ev.dataTransfer.getData("application/my-app");
-	ev.target.appendChild(data);
+	//ev.target.appendChild('<div>Drop</div>');
 	console.log("Drop##########");
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-	// Get the element by id
 	const elements = document.getElementsByClassName("parts");
-	// Add the ondragstart event listener
 	for(let i=0; i<elements.length; i++){
 		elements[i].setAttribute("draggable","true");
 		elements[i].ondragstart = dragstart_handler;
-		//elements[i].addEventListener("dragstart", function ( event ) { event.dataTransfer.setData( "text", "SYNCER" ) ; });
-		//console.log(elements[i]);
 	}
 	const field = document.getElementById("fieldArea");
-	field.addEventListener("dragover", dragover_handler);
-	field.addEventListener("drop", drop_handler);
+	field.ondragover = dragover_handler;
+	field.ondrop = drop_handler;
+
+	setInterval(getRailInfo, 1000);
 });
